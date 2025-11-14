@@ -3,6 +3,7 @@ from db_helper import reset_db
 from repositories.todo_repository import get_todos, create_todo, set_done
 from config import app, test_env
 from util import validate_todo
+from repositories.book_repository import get_books
 
 @app.route("/")
 def index():
@@ -37,3 +38,9 @@ if test_env:
     def reset_database():
         reset_db()
         return jsonify({ 'message': "db reset" })
+    
+@app.route("/citations")
+def citations():
+        books = get_books()
+        print(get_books()[0])
+        return render_template("citations.html", books=books)
