@@ -8,6 +8,7 @@ from db_helper import create_book
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """Handles the main page for viewing and adding books"""
     if request.method == "POST":
         title = request.form.get("title")
         author = request.form.get("author")
@@ -16,14 +17,14 @@ def index():
         address = request.form.get("address")
 
         if not title or not author:
-            flash("Title and author are required!")
+            return redirect("/")
         else:
             create_book(title, author, year, publisher, address)
-            flash("Book added!")
+            return redirect("/")
 
         return redirect("/")
 
-    return render_template("index.html")  # ei books-muuttujaa
+    return render_template("index.html")
 
 # testausta varten oleva reitti
 if test_env:

@@ -45,6 +45,7 @@ def setup_db():
   db.session.execute(sql)
   db.session.commit()
 
+"""Creates a new book entry in the database"""
 def create_book(title, author, year=None, publisher=None, address=None):
     # Luodaan uusi Book-olio
     new_book = Book(
