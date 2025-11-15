@@ -45,9 +45,8 @@ def setup_db():
   db.session.execute(sql)
   db.session.commit()
 
-"""Creates a new book entry in the database"""
 def create_book(title, author, year=None, publisher=None, address=None):
-    # Luodaan uusi Book-olio
+    """Creates a new book entry in the database"""
     new_book = Book(
         title=title,
         author=author,
@@ -55,9 +54,7 @@ def create_book(title, author, year=None, publisher=None, address=None):
         publisher=publisher,
         address=address
     )
-    # Lisätään se sessioon
     db.session.add(new_book)
-    # Tallennetaan tietokantaan
     db.session.commit()
 
 

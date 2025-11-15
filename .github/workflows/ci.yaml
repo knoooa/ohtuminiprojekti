@@ -7,9 +7,9 @@ env:
 
 on:
   push:
-    branches: [main, feature-1]
+    branches: [main]
   pull_request:
-    branches: [main, feature-1]
+    branches: [main]
 
 jobs:
   build:
