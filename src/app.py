@@ -3,6 +3,7 @@ from flask import flash, jsonify, redirect, render_template, request
 from config import app, test_env
 from db_helper import create_book, reset_db
 from models import Book
+from repositories.book_repository import get_books
 from repositories.todo_repository import create_todo, get_todos, set_done
 from util import validate_todo
 
@@ -36,5 +37,9 @@ if test_env:
         reset_db()
         return jsonify({'message': "db reset"})
 
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+
+@app.route("/citations")
+def citations():
+    books = get_books()
+    print(get_books()[0])
+    return render_template("citations.html", books=books)
