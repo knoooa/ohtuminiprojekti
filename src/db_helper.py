@@ -1,14 +1,14 @@
 import os
 
-from entites.book import Book
 from sqlalchemy import text
 
+from entites.book import Book
 from config import app, db
 
 
 def reset_db():
-    print(f"Clearing contents from table todos")
-    sql = text(f"DELETE FROM todos")
+    print("Clearing contents from table todos")
+    sql = text("DELETE FROM todos")
     db.session.execute(sql)
     db.session.commit()
 

@@ -17,11 +17,8 @@ def index():
 
         if not title or not author:
             return redirect("/")
-        else:
-            create_book(title, author, year, publisher, address)
-            flash("Book added successfully!")
-            return redirect("/")
-
+        create_book(title, author, year, publisher, address)
+        flash("Book added successfully!")
         return redirect("/")
 
     return render_template("index.html")
