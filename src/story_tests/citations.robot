@@ -59,6 +59,7 @@ Find Edited Book
     Page Should Contain  456 Updated St
 
 Confirm No Example Book Is In The List
+    Go To View Page
     Page Should Not Contain  John Doe
     Page Should Not Contain  Example Book
     Page Should Not Contain  2020
