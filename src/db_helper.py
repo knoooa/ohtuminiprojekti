@@ -1,6 +1,7 @@
 import os
 
 from sqlalchemy import text
+from sqlalchemy.exc import ProgrammingError
 
 from config import app, db
 
@@ -8,6 +9,12 @@ from config import app, db
 def reset_db():
     print("Clearing contents from all tables")
     table_list = tables()
+
+    if not table_list:
+        print("No tables found in database; creating database schema")
+        setup_db()
+        return
+
     for table in table_list:
         sql = text(f"DELETE FROM {table}")
         db.session.execute(sql)
