@@ -1,7 +1,6 @@
 import os
 
 from sqlalchemy import text
-from sqlalchemy.exc import ProgrammingError
 
 from config import app, db
 
