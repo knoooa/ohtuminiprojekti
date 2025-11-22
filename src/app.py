@@ -2,7 +2,7 @@ from flask import flash, jsonify, redirect, render_template, request, abort
 
 from config import app, test_env
 from db_helper import reset_db
-from repositories.book_repository import create_book, get_books, get_book, update_book
+from repositories.book_repository import create_book, get_books, get_book, update_book, delete_book
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -37,12 +37,14 @@ def citations():
     books = get_books()
     return render_template("citations.html", books=books)
 
+
 @app.route("/edit/<int:id>", methods=["GET"])
 def edit_page(id):
     book = get_book(id)
     if not book:
         abort(404)
     return render_template("edit.html", book=book)
+
 
 @app.route("/edit/<int:id>", methods=["POST"])
 def edit_book(id):
@@ -54,4 +56,11 @@ def edit_book(id):
         request.form["publisher"],
         request.form["address"]
     )
+    return redirect("/citations")
+
+
+@app.route("/citations/delete/<int:book_id>")
+def delete_citation(book_id):
+    """Deletes a book citation by its ID"""
+    delete_book(book_id)
     return redirect("/citations")
