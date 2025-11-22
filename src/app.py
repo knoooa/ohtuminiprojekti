@@ -36,12 +36,15 @@ if test_env:
 def citations():
     books = get_books()
     return render_template("citations.html", books=books)
+
+
 @app.route("/edit/<int:id>", methods=["GET"])
 def edit_page(id):
     book = get_book(id)
     if not book:
         abort(404)
     return render_template("edit.html", book=book)
+
 
 @app.route("/edit/<int:id>", methods=["POST"])
 def edit_book(id):
