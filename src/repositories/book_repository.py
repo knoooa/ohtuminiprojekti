@@ -58,6 +58,7 @@ def update_book(id, title, author, year, publisher, address):
     })
     db.session.commit()
 
+
 def delete_book(book_id):
     """Deletes a book entry from the database by its ID"""
     sql = text("DELETE FROM book WHERE id = :book_id")
