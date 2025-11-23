@@ -46,7 +46,7 @@ Find Example book
 
 Edit Book
     Go To View Page
-    Click Link  Edit
+    Click Button  Edit
     Input Text  title  Updated Book Title
     Input Text  author  Jane Smith
     Input Text  year  2021

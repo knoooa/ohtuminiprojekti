@@ -3,7 +3,7 @@ Library  SeleniumLibrary
 
 *** Variables ***
 ${SERVER}     localhost:5001
-${DELAY}      0.3 seconds
+${DELAY}      0.2 seconds
 ${HOME_URL}   http://${SERVER}
 ${VIEW_URL}   http://${SERVER}/citations
 ${RESET_URL}  http://${SERVER}/reset_db
