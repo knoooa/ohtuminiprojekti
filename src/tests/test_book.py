@@ -110,7 +110,7 @@ class TestBook(unittest.TestCase):
         from entities.book import Book
 
         book = Book(
-            id=1,
+            book_id=1,
             title="Sample Title",
             author="Sample Author",
             year=2021,
