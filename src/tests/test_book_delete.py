@@ -22,11 +22,6 @@ class TestBookDelete(unittest.TestCase):
 
     @patch("app.delete_book")
     def test_delete_citation_calls_delete_and_redirects(self, mock_delete_book):
-        with self.app.app_context():
-            create_book(
-                "Sample Title", "Sample Author", "2021", "Sample Publisher", "Sample Address"
-            )
-
         response = self.client.get(
             "/citations/delete/1", follow_redirects=False)
 
@@ -36,7 +31,6 @@ class TestBookDelete(unittest.TestCase):
 
     @patch("app.delete_book")
     def test_delete_nonexistent_book_calls_delete_and_redirects(self, mock_delete_book):
-        # Try deleting an ID that doesn't exist; app should still call delete wrapper
         response = self.client.get(
             "/citations/delete/999", follow_redirects=False)
 

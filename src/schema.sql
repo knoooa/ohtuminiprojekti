@@ -1,5 +1,3 @@
--- Using BEGIN and COMMIT to ensure atomic execution
-BEGIN;
 DROP TABLE IF EXISTS book;
 
 CREATE TABLE book (
@@ -10,5 +8,3 @@ CREATE TABLE book (
   publisher TEXT,
   address TEXT
 );
-
-COMMIT;

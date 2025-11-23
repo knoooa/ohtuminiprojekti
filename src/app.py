@@ -28,6 +28,8 @@ def index():
         create_book(title, author, year, publisher, address)
         flash("Book added successfully!")
         return redirect("/")
+
+    # Here to not make pylance complain
     abort(405)
 
 

@@ -19,8 +19,8 @@ def reset_db():
         return
 
     for table in tables_in_db:
-        sql = text(f"DELETE FROM {table}")
-        db.session.execute(sql)
+        sql = text(f"DELETE FROM ? CASCADE")
+        db.session.execute(sql, [table])
     db.session.commit()
 
     print("Cleared database contents. Tables: " + ", ".join(tables_in_db))
@@ -46,13 +46,13 @@ def setup_db():
     """
     print("Creating database")
 
-    # Drop existing tables. schema.sql should have drop table if exists aswell.
+    # Drop existing tables. schema.sql should have drop table if exists as well.
     tables_in_db = tables()
     if tables_in_db:
         print(f"Tables exist, dropping: {", ".join(tables_in_db)}")
         for table in tables_in_db:
-            sql = text(f"DROP TABLE IF EXISTS {table} CASCADE")
-            db.session.execute(sql)
+            sql = text(f"DROP TABLE IF EXISTS ? CASCADE")
+            db.session.execute(sql, [table])
         db.session.commit()
 
     # Read schema from schema.sql file
