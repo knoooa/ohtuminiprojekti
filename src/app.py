@@ -1,8 +1,14 @@
-from flask import flash, jsonify, redirect, render_template, request, abort
+from flask import abort, flash, jsonify, redirect, render_template, request
 
 from config import app, test_env
 from db_helper import reset_db
-from repositories.book_repository import create_book, get_books, get_book, update_book, delete_book
+from repositories.book_repository import (
+    create_book,
+    delete_book,
+    get_book,
+    get_books,
+    update_book,
+)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -23,6 +29,9 @@ def index():
         flash("Book added successfully!")
         return redirect("/")
 
+    # Here to not make pylance complain
+    abort(405)
+
 
 # testausta varten oleva reitti
 if test_env:
@@ -38,18 +47,18 @@ def citations():
     return render_template("citations.html", books=books)
 
 
-@app.route("/edit/<int:id>", methods=["GET"])
-def edit_page(id):
-    book = get_book(id)
+@app.route("/edit/<int:book_id>", methods=["GET"])
+def edit_page(book_id):
+    book = get_book(book_id)
     if not book:
         abort(404)
     return render_template("edit.html", book=book)
 
 
-@app.route("/edit/<int:id>", methods=["POST"])
-def edit_book(id):
+@app.route("/edit/<int:book_id>", methods=["POST"])
+def edit_book(book_id):
     update_book(
-        id,
+        book_id,
         request.form["title"],
         request.form["author"],
         request.form["year"],
@@ -59,8 +68,8 @@ def edit_book(id):
     return redirect("/citations")
 
 
-@app.route("/citations/delete/<int:book_id>", methods=["POST"])
+@app.route("/citations/delete/<int:book_id>", methods=["GET", "POST"])
 def delete_citation(book_id):
-    """Deletes a book citation by its ID"""
+    """Deletes a book citation by its ID (supports GET for tests and POST from forms)"""
     delete_book(book_id)
     return redirect("/citations")
