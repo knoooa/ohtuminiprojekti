@@ -5,8 +5,6 @@ from unittest.mock import patch
 
 import db_helper
 from app import app
-from repositories.book_repository import create_book
-
 os.environ.setdefault("TEST_ENV", "true")
 
 
