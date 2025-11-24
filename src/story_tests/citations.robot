@@ -31,7 +31,7 @@ Add Example Book
     Input Text  author  John Doe
     Input Text  year  2020
     Input Text  publisher  Example Publisher
-    Input Text  address  123 Example St    
+    Input Text  address  123 Example St
     Click Button  Add Book
     Wait Until Page Contains  Book added successfully!
 
