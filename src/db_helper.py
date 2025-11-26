@@ -56,7 +56,7 @@ def setup_db():
         db.session.commit()
 
     # Read schema from schema.sql file
-    schema_path = os.path.join(os.path.dirname(__file__), "schema.sql")
+    schema_path = os.path.join(os.path.dirname(__file__), "sql", "schema.sql")
 
     if not os.path.exists(schema_path):
         print(f"No schema file found, cannot create database: {schema_path}")
