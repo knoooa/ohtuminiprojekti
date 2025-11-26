@@ -34,7 +34,7 @@ CREATE TABLE default_entry_fields (
 );
 
 
--- Indecies to improve query performance
+-- Indices to improve query performance
 -- GIN index for fast jsonb containment queries on citation fields
 CREATE INDEX IF NOT EXISTS citations_fields_gin ON citations USING GIN (fields);
 
