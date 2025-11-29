@@ -5,6 +5,7 @@ import routes.citations
 import routes.delete
 import routes.edit
 import routes.main
+import routes.search
 import routes.testing_env
 from config import app, test_env
 
@@ -58,6 +59,13 @@ def delete_citation(citation_id):
 def show_bibtex(citation_id):
     """Renders the bibtex page for a specific citation by its ID"""
     return routes.bibtex.get(citation_id)
+
+
+@app.route("/search", methods=["GET"])
+@app.route("/citations/search", methods=["GET"])
+def citations_search():
+    """Renders the search page and handles search queries."""
+    return routes.search.get()
 
 
 @app.route("/edit")

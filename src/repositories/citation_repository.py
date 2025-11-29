@@ -168,3 +168,60 @@ def delete_citation(citation_id):
 
     db.session.execute(sql, {"citation_id": citation_id})
     db.session.commit()
+
+
+def search_citations(queries=None):
+    base_sql = """
+        SELECT
+            c.id,
+            et.name AS entry_type,
+            c.citation_key,
+            c.fields
+        FROM citations c
+        JOIN entry_types et ON c.entry_type_id = et.id
+    """
+
+    if not queries:
+        return []
+
+    filters = []
+    params = {}
+
+    if queries["q"]:
+        filters.append("c.fields::text ILIKE :q")
+        params["q"] = f"%{queries["q"]}%"
+
+    if queries["citation_key"]:
+        filters.append("c.citation_key ILIKE :citation_key")
+        params["citation_key"] = f"%{queries["citation_key"]}%"
+
+    if queries["entry_type"]:
+        filters.append("et.name = :entry_type")
+        params["entry_type"] = queries["entry_type"]
+
+    if queries["author"]:
+        filters.append("c.fields->>'author' ILIKE :author")
+        params["author"] = f"%{queries["author"]}%"
+
+    if queries["year_from"]:
+        filters.append("(c.fields->>'year')::int >= :year_from")
+        params["year_from"] = int(queries["year_from"])
+
+    if queries["year_to"]:
+        filters.append("(c.fields->>'year')::int <= :year_to")
+        params["year_to"] = int(queries["year_to"])
+
+    if filters:
+        base_sql += f" WHERE {" AND ".join(filters)}"
+
+    if queries["sort_by"] == "year":
+        base_sql += f" ORDER BY (c.fields->>'year')::int {queries["direction"]}"
+    elif queries["sort_by"] == "citation_key":
+        base_sql += f" ORDER BY c.citation_key {queries["direction"]}"
+    else:
+        base_sql += " ORDER BY c.id ASC"
+
+    sql = text(base_sql)
+
+    result = db.session.execute(sql, params).fetchall()
+    return [_to_citation(r) for r in result]
