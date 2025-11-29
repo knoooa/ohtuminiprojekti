@@ -23,12 +23,10 @@ def post(citation_id):
     citation_key = request.form.get("citation_key", "")
 
     # Collapsing whitespace for citation key only, since it should not contain any spaces.
-    citation_key = util.collapse_whitespace(citation_key)
-    if not citation_key:
+    sanitized_citation_key = util.collapse_whitespace(citation_key)
+    if not sanitized_citation_key:
         flash("Invalid citation key provided.", "error")
         return redirect(url_for("citations_view"))
-
-    sanitized_citation_key = util.sanitize(citation_key)
 
     posted_fields = util.get_posted_fields(request.form)
     # Maybe add a check here to see if fields have actually changed.

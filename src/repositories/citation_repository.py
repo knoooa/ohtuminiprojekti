@@ -229,14 +229,18 @@ def search_citations(queries=None):
     if filters:
         base_sql += " WHERE " + " AND ".join(filters)
 
-    if queries.get("sort_by") == "year":
-        base_sql += f" ORDER BY (c.fields->>'year')::int {
-            ('DESC' if queries.get('direction', 'ASC').upper() == 'DESC' else 'ASC')
-        }"
-    elif queries.get("sort_by") == "citation_key":
-        base_sql += f" ORDER BY c.citation_key {
-            ('DESC' if queries.get('direction', 'ASC').upper() == 'DESC' else 'ASC')
-        }"
+    allowed_sort_by = {"year", "citation_key"}
+    allowed_direction = {"ASC", "DESC"}
+    sort_by = queries.get("sort_by", "").lower()
+    direction = queries.get("direction", "ASC").upper()
+
+    sort_by = sort_by if sort_by in allowed_sort_by else None
+    direction = direction if direction in allowed_direction else "ASC"
+
+    if sort_by == "year":
+        base_sql += f" ORDER BY (c.fields->>'year')::int {direction}"
+    elif sort_by == "citation_key":
+        base_sql += f" ORDER BY c.citation_key {direction}"
     else:
         base_sql += " ORDER BY c.id ASC"
 

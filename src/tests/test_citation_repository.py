@@ -4,7 +4,6 @@ from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import repositories.citation_repository as repo
-from util import parse_search_queries
 
 
 class TestCitationRepository(unittest.TestCase):

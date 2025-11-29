@@ -12,5 +12,5 @@ def post(citation_id):
         flash("Citation deleted successfully.", "success")
     except (ValueError, TypeError, SQLAlchemyError) as e:
         flash(
-            f"An error occurred while updating the citation: {str(e)}", "error")
+            f"An error occurred while deleting the citation: {str(e)}", "error")
     return redirect(url_for("citations_view"))
