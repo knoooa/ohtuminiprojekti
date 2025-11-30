@@ -176,6 +176,9 @@ def delete_citation(citation_id):
 
 
 def search_citations(queries=None):
+    print("=== SEARCH FUNCTION RUNNING ===")
+    if queries is None:
+        queries = {}
     base_sql = """
         SELECT
             c.id,
@@ -185,8 +188,6 @@ def search_citations(queries=None):
         FROM citations c
         JOIN entry_types et ON c.entry_type_id = et.id
     """
-    if not queries:
-        return []
 
     def _to_int(v):
         if v is None or v == "":
@@ -231,8 +232,8 @@ def search_citations(queries=None):
 
     allowed_sort_by = {"year", "citation_key"}
     allowed_direction = {"ASC", "DESC"}
-    sort_by = queries.get("sort_by", "").lower()
-    direction = queries.get("direction", "ASC").upper()
+    sort_by = (queries.get("sort_by") or "").lower()
+    direction = (queries.get("direction") or "ASC").upper()
 
     sort_by = sort_by if sort_by in allowed_sort_by else None
     direction = direction if direction in allowed_direction else "ASC"
