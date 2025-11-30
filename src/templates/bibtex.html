@@ -15,7 +15,10 @@
     navigator.clipboard.writeText(text);
   }
 </script>
-{% else %}
-<p>No citation found.</p>
-{% endif %}
+
+
+<form action="/citations" method="get" style="display:inline; margin-top:10px;">
+  <button type="submit">Back</button>
+</form>
+
 {% endblock %}
